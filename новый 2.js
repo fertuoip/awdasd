@@ -109,3 +109,162 @@ describe("About Arrays (about_arrays.js)", function() {
     expect(array[3]).toBe("three");
   });
 });
+
+describe("About this (about_this.js)", function() {
+  it("'this' inside a method", function () {
+    let person = {
+      name: 'bob',
+      intro: function () {
+        return "Hello, my name is " + this.name;
+      }
+    }
+
+    // If an object has a method can you access properties inside it?
+    expect(person.intro()).toBe("Hello, my name is bob");
+  });
+
+  it("'this' on unattached function", function () {
+    let person = {
+      globalName: 'bob',
+      intro: function () {
+        return "Hello, my name is " + this.globalName;
+      }
+    }
+
+    let alias = person.intro;
+
+    // if the function is not called as an object property 'this' is the global context 
+    // (window in a browser). This is an example. Please do not do this in practise.
+    window.globalName = 'Peter';
+
+    // What does 'this' refer to when it is not part of an object?
+    expect(alias()).toBe("Hello, my name is Peter");
+  });
+
+  it("'this' set explicitly", function () {
+    let person = {
+      name: 'bob',
+      intro: function () {
+        return "Hello, my name is " + this.name;
+      }
+    }
+
+    // calling a function with 'call' lets us assign 'this' explicitly
+    let message = person.intro.call({name: "Frank"});
+
+    // What does 'this' refer to when you use the 'call()' method?
+    expect(message).toBe("Hello, my name is Frank");
+  });
+});
+
+describe("About this (about_this.js)", function() {
+  it("'this' inside a method", function () {
+    let person = {
+      name: 'bob',
+      intro: function () {
+        return "Hello, my name is " + this.name;
+      }
+    }
+
+    // If an object has a method can you access properties inside it?
+    expect(person.intro()).toBe("Hello, my name is bob");
+  });
+
+  it("'this' on unattached function", function () {
+    let person = {
+      globalName: 'bob',
+      intro: function () {
+        return "Hello, my name is " + this.globalName;
+      }
+    }
+
+    let alias = person.intro;
+
+    // if the function is not called as an object property 'this' is the global context 
+    // (window in a browser). This is an example. Please do not do this in practise.
+    window.globalName = 'Peter';
+
+    // What does 'this' refer to when it is not part of an object?
+    expect(alias()).toBe("Hello, my name is Peter");
+  });
+
+  it("'this' set explicitly", function () {
+    let person = {
+      name: 'bob',
+      intro: function () {
+        return "Hello, my name is " + this.name;
+      }
+    }
+
+    // calling a function with 'call' lets us assign 'this' explicitly
+    let message = person.intro.call({name: "Frank"});
+
+    // What does 'this' refer to when you use the 'call()' method?
+    expect(message).toBe("Hello, my name is Frank");
+  });
+});
+
+describe("About Objects (about_objects.js)", function() {
+  it("object type", function() {
+    let emptyObject = {};
+    // what is the type of an object?
+    expect("object").toBe(typeof(emptyObject));
+  });
+
+  it("object literal notation", function() {
+    let person = {
+      name: "Amory Blaine",
+      age: 102
+    };
+    // what is the person's name?
+    expect("Amory Blaine").toBe(person.name);
+    // what is the person's age?
+    expect(102).toBe(person.age);
+  });
+
+  it("dynamically adding properties", function() {
+    let person = {};
+    person.name = "Amory Blaine";
+    person.age = 102;
+    // what is the person's name?
+    expect("Amory Blaine").toBe(person.name);
+    // what is the person's age?
+    expect(102).toBe(person.age);
+  });
+
+  it("adding properties from strings", function() {
+    let person = {};
+    person["name"] = "Amory Blaine";
+    person["age"] = 102;
+    // what is the person's name?
+    expect("Amory Blaine").toBe(person.name);
+    // what is the person's age?
+    expect(102).toBe(person.age);
+  });
+
+  it("adding functions", function() {
+    let person = {
+      name: "Amory Blaine",
+      age: 102,
+      toString: function() {
+        return "I " + this.name + " am " + this.age + " years old.";
+      }
+    };
+    // what should the toString function be?
+    expect("I Amory Blaine am 102 years old.").toBe(person.toString());
+  });
+
+  it("property enumeration", function() {
+    let keys = [];
+    let values = [];
+    let person = {name: 'Amory Blaine', age: 102, unemployed: true};
+    for(let propertyName in person) {
+      keys.push(propertyName);
+      values.push(person[propertyName]);
+    }
+    // what are the property names of the object?
+    expect(keys).toEqual(["name", "age", "unemployed"]);
+    // what are the property values of the object?
+    expect(values).toEqual(["Amory Blaine", 102, true]);
+  });
+});
